@@ -1,0 +1,25 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f172a;color:#fff;font-family:system-ui}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+header{text-align:center;margin-bottom:20px}
+.logo{font-size:2.5rem;font-weight:900}
+.logo span{color:#00e676}
+.live{font-size:0.8rem;color:#00e676;display:inline-block;margin-left:10px;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.search{width:100%;max-width:400px;padding:12px 20px;border-radius:30px;border:none;margin:20px 0;font-size:1rem}
+.tabs{display:flex;justify-content:center;gap:10px;margin-top:10px}
+.tabs button{padding:10px 20px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:#fff;cursor:pointer}
+.tabs button.active{background:#00e676;color:#000;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
+.card{background:#1e293b;border-radius:16px;padding:18px;border:1px solid #334155}
+.card-top{display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:10px;color:#94a3b8}
+.jackpot{background:#facc15;color:#000;padding:2px 8px;border-radius:10px;font-weight:800;font-size:0.7rem}
+.prediction{display:flex;justify-content:space-between;background:#0f172a;padding:10px;border-radius:10px;margin:10px 0}
+.conf{padding:3px 10px;border-radius:20px;font-weight:800;color:#000}
+.analysis{font-size:0.85rem;color:#cbd5e1;margin:10px 0;line-height:1.4}
+.odds{display:flex;gap:8px;margin:12px 0}
+.odds div{flex:1;background:#0f172a;padding:8px;border-radius:8px;text-align:center}
+.odds div.best{background:#00e67622;border:1px solid #00e676}
+.odds span{display:block;font-size:0.7rem;color:#94a3b8}
+.btn{width:100%;padding:12px;background:#00e676;color:#000;border:none;border-radius:10px;font-weight:800;cursor:pointer}
+footer{text-align:center;margin-top:40px;color:#64748b;font-size:0.8rem}
