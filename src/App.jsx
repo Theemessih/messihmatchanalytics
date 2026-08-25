@@ -56,3 +56,15 @@ function App() {
   )
 }
 export default App
+{
+  id: 7,
+  league: "Premier League",
+  home: "Liverpool",
+  away: "Chelsea",
+  time: "Today 22:00",
+  tip: "Over 2.5 Goals",
+  confidence: 82,
+  reason: "Last 5 meetings all had 3+ goals. Both attacking teams.",
+  odds: { betika: "1.85", sportpesa: "1.90", mozzart: "1.88" },
+  isJackpot: true
+},
