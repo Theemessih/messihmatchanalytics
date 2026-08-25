@@ -1,117 +1,54 @@
-import { useState } from 'react'
-import './App.css'
-function App() {
-  const [active, setActive] = useState('all')
-  const [search, setSearch] = useState('')
-  const games = [
-    { id: 1, league: "EPL", match: "Arsenal vs Man City", time: "Today 19:00", pred: "Over 1.5", conf: 92, odds: { betika: 1.28, sportpesa: 1.30, mozzart: 1.27 }, jp: true, tip: "Arsenal scored in 18/20 last games. Man City conceded in 8/10 away." },
-    { id: 2, league: "LaLiga", match: "Barcelona vs Real Madrid", time: "Tomorrow 22:00", pred: "BTTS Yes", conf: 88, odds: { betika: 1.65, sportpesa: 1.70, mozzart: 1.68 }, jp: true, tip: "Both teams scored in last 5 Clasicos. High stakes game." },
-    { id: 3, league: "KPL", match: "Gor Mahia vs Tusker", time: "Today 15:00", pred: "Home Win", conf: 75, odds: { betika: 2.10, sportpesa: 2.05, mozzart: 2.15 }, jp: false, tip: "Gor unbeaten at home 10 games. Tusker missing key striker." },
-    { id: 4, league: "UCL", match: "PSG vs Bayern", time: "Wed 21:00", pred: "Over 2.5", conf: 85, odds: { betika: 1.75, sportpesa: 1.80, mozzart: 1.78 }, jp: true, tip: "Both attacking teams. Last 3 meetings went over 2.5" },
-    { id: 5, league: "Serie A", match: "Inter vs Napoli", time: "Today 20:45", pred: "1X", conf: 80, odds: { betika: 1.35, sportpesa: 1.33, mozzart: 1.36 }, jp: true, tip: "Inter strong at home, Napoli poor away form" },
-    { id: 6, league: "KPL", match: "AFC Leopards vs Shabana", time: "Tomorrow 14:00", pred: "Under 2.5", conf: 70, odds: { betika: 1.60, sportpesa: 1.62, mozzart: 1.58 }, jp: false, tip: "Both teams low scoring this season" },
-  ]
-  const filtered = games.filter(g => {
-    const matchSearch = g.match.toLowerCase().includes(search.toLowerCase())
-    const matchTab = active === 'jackpot' ? g.jp : true
-    return matchSearch && matchTab
-  })
-  const bestOdds = (odds) => Math.max(...Object.values(odds))
+import { useState } from "react";
+
+const allGames = [
+  { id: 1, league: "Premier League", home: "Arsenal", away: "Man City", time: "Today 19:30", tip: "Over 1.5 Goals", confidence: 77, reason: "Both teams scoring form. Last 5 meetings all over 1.5", odds: { betika: "1.28", sportpesa: "1.30", mozzart: "1.27" }, isJackpot: false },
+  { id: 2, league: "LaLiga", home: "Barcelona", away: "Real Madrid", time: "Today 22:00", tip: "BTTS Yes", confidence: 82, reason: "El Clasico always BTTS. 8 of last 10", odds: { betika: "1.65", sportpesa: "1.70", mozzart: "1.68" }, isJackpot: true },
+  { id: 3, league: "KPL", home: "Gor Mahia", away: "Tusker", time: "Tomorrow 15:00", tip: "Home Win", confidence: 75, reason: "Gor Mahia unbeaten at home 10 games", odds: { betika: "2.10", sportpesa: "2.15", mozzart: "2.08" }, isJackpot: false },
+  { id: 4, league: "Premier League", home: "Man Utd", away: "Liverpool", time: "Today 17:30", tip: "Over 2.5", confidence: 88, reason: "High scoring rivalry", odds: { betika: "1.75", sportpesa: "1.80", mozzart: "1.78" }, isJackpot: true },
+  { id: 5, league: "Serie A", home: "AC Milan", away: "Inter", time: "Tomorrow 21:45", tip: "Draw", confidence: 68, reason: "Derby often tight", odds: { betika: "3.20", sportpesa: "3.30", mozzart: "3.25" }, isJackpot: false },
+  { id: 6, league: "Bundesliga", home: "Bayern", away: "Dortmund", time: "Today 20:30", tip: "Bayern Win", confidence: 79, reason: "Bayern dominance at home", odds: { betika: "1.50", sportpesa: "1.55", mozzart: "1.52" }, isJackpot: false },
+  { id: 7, league: "Champions League", home: "Real Madrid", away: "Man City", time: "Tomorrow 22:00", tip: "BTTS Yes", confidence: 88, reason: "Both scored in last 6 UCL meetings", odds: { betika: "1.62", sportpesa: "1.65", mozzart: "1.64" }, isJackpot: true },
+  { id: 8, league: "Champions League", home: "Bayern Munich", away: "PSG", time: "Tomorrow 22:00", tip: "Over 2.5 Goals", confidence: 85, reason: "Bayern 12 goals last 3 UCL home games", odds: { betika: "1.78", sportpesa: "1.80", mozzart: "1.79" }, isJackpot: true },
+  { id: 9, league: "Champions League", home: "Arsenal", away: "Inter Milan", time: "Today 22:00", tip: "Home Win", confidence: 79, reason: "Arsenal unbeaten at Emirates in UCL", odds: { betika: "2.10", sportpesa: "2.15", mozzart: "2.12" }, isJackpot: false },
+  { id: 10, league: "Champions League", home: "Barcelona", away: "Dortmund", time: "Today 22:00", tip: "Barcelona Win", confidence: 81, reason: "Barca 90% win rate at Camp Nou", odds: { betika: "1.55", sportpesa: "1.58", mozzart: "1.56" }, isJackpot: false },
+];
+
+export default function App() {
+  const [filter, setFilter] = useState("All");
+  const filtered = filter === "All" ? allGames : filter === "Jackpot" ? allGames.filter(g => g.isJackpot) : allGames.filter(g => g.league === filter);
   return (
-    <div className="container">
-      <header>
-        <div className="logo">MESSIH<span>MatchAnalytics</span><div className="live">● LIVE</div></div>
-        <p>Daily analysis across Betika, SportPesa, Mozzart, Odibets + Jackpots</p>
-        <input className="search" placeholder="Search team e.g. Arsenal, Gor..." value={search} onChange={e=>setSearch(e.target.value)} />
-        <div className="tabs">
-          <button onClick={()=>setActive('all')} className={active==='all'?'active':''}>All Games ({games.length})</button>
-          <button onClick={()=>setActive('jackpot')} className={active==='jackpot'?'active':''}>Jackpot ({games.filter(g=>g.jp).length})</button>
-        </div>
-      </header>
-      <div className="grid">
-        {filtered.map(g => (
-          <div key={g.id} className="card">
-            <div className="card-top">
-              <span>{g.league}</span>
-              {g.jp && <span className="jackpot">JACKPOT</span>}
-              <span>{g.time}</span>
+    <div className="min-h-screen bg-black text-white p-4">
+      <h1 className="text-3xl font-bold text-center mb-2">MESSIH<span className="text-green-400">MatchAnalytics</span></h1>
+      <p className="text-center text-gray-400 mb-4">Pro Football Predictions - {allGames.length} Games</p>
+      <div className="flex gap-2 justify-center mb-6 flex-wrap">
+        {["All", "Jackpot", "Premier League", "Champions League", "LaLiga", "KPL"].map(f => (
+          <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-full text-sm ${filter === f ? "bg-green-500 text-black" : "bg-gray-800"}`}>{f} {f==="All" ? `(${allGames.length})` : f==="Jackpot" ? `(${allGames.filter(g=>g.isJackpot).length})` : `(${allGames.filter(g=>g.league===f).length})`}</button>
+        ))}
+      </div>
+      <div className="grid gap-4 max-w-4xl mx-auto">
+        {filtered.map(game => (
+          <div key={game.id} className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs bg-gray-800 px-2 py-1 rounded">{game.league}</span>
+              {game.isJackpot && <span className="text-xs bg-yellow-500 text-black px-2 py-1 rounded font-bold">JACKPOT</span>}
+              <span className="text-xs text-gray-400">{game.time}</span>
             </div>
-            <h3>{g.match}</h3>
-            <div className="prediction">
-              <span>Tip: <b>{g.pred}</b></span>
-              <span className="conf" style={{background: g.conf>85?'#00c853':'#ffab00'}}>{g.conf}%</span>
+            <h3 className="text-lg font-bold">{game.home} vs {game.away}</h3>
+            <div className="mt-3 bg-gray-800 rounded-lg p-3">
+              <div className="flex justify-between items-center">
+                <span className="text-green-400 font-bold">{game.tip}</span>
+                <span className="bg-green-500 text-black px-3 py-1 rounded-full text-sm font-bold">{game.confidence}%</span>
+              </div>
+              <p className="text-xs text-gray-400 mt-2">{game.reason}</p>
+              <div className="flex gap-2 mt-3 text-xs">
+                <span className="bg-black px-2 py-1 rounded">Betika {game.odds.betika}</span>
+                <span className="bg-black px-2 py-1 rounded">SportPesa {game.odds.sportpesa}</span>
+                <span className="bg-black px-2 py-1 rounded">Mozzart {game.odds.mozzart}</span>
+              </div>
             </div>
-            <p className="analysis">{g.tip}</p>
-            <div className="odds">
-              <div className={g.odds.betika===bestOdds(g.odds)?'best':''}><span>Betika</span><b>{g.odds.betika}</b></div>
-              <div className={g.odds.sportpesa===bestOdds(g.odds)?'best':''}><span>SportPesa</span><b>{g.odds.sportpesa}</b></div>
-              <div className={g.odds.mozzart===bestOdds(g.odds)?'best':''}><span>Mozzart</span><b>{g.odds.mozzart}</b></div>
-            </div>
-            <button className="btn">Get Full Analysis →</button>
           </div>
         ))}
       </div>
-      <footer>© 2026 MESSIH MatchAnalytics - Kericho, Kenya | Built for winners</footer>
     </div>
-  )
+  );
 }
-export default App
-{
-  id: 7,
-  league: "Premier League",
-  home: "Liverpool",
-  away: "Chelsea",
-  time: "Today 22:00",
-  tip: "Over 2.5 Goals",
-  confidence: 82,
-  reason: "Last 5 meetings all had 3+ goals. Both attacking teams.",
-  odds: { betika: "1.85", sportpesa: "1.90", mozzart: "1.88" },
-  isJackpot: true
-},{
-    id: 7,
-    league: "Champions League",
-    home: "Real Madrid",
-    away: "Man City",
-    time: "Tomorrow 22:00",
-    tip: "BTTS Yes",
-    confidence: 88,
-    reason: "Both teams scored in last 6 UCL meetings. Haaland vs Mbappe battle.",
-    odds: { betika: "1.62", sportpesa: "1.65", mozzart: "1.64" },
-    isJackpot: true
-  },
-  {
-    id: 8,
-    league: "Champions League",
-    home: "Bayern Munich",
-    away: "PSG",
-    time: "Tomorrow 22:00",
-    tip: "Over 2.5 Goals",
-    confidence: 85,
-    reason: "Bayern home: 12 goals in last 3 UCL games. PSG away weak defensively.",
-    odds: { betika: "1.78", sportpesa: "1.80", mozzart: "1.79" },
-    isJackpot: true
-  },
-  {
-    id: 9,
-    league: "Champions League",
-    home: "Arsenal",
-    away: "Inter Milan",
-    time: "Today 22:00",
-    tip: "Home Win",
-    confidence: 79,
-    reason: "Arsenal unbeaten at Emirates in UCL. Inter missing 2 key defenders.",
-    odds: { betika: "2.10", sportpesa: "2.15", mozzart: "2.12" },
-    isJackpot: false
-  },
-  {
-    id: 10,
-    league: "Champions League",
-    home: "Barcelona",
-    away: "Dortmund",
-    time: "Today 22:00",
-    tip: "Barcelona Win",
-    confidence: 81,
-    reason: "Barca 90% win rate at Camp Nou in UCL group stage.",
-    odds: { betika: "1.55", sportpesa: "1.58", mozzart: "1.56" },
-    isJackpot: false
-  },
