@@ -67,4 +67,51 @@ export default App
   reason: "Last 5 meetings all had 3+ goals. Both attacking teams.",
   odds: { betika: "1.85", sportpesa: "1.90", mozzart: "1.88" },
   isJackpot: true
-},
+},{
+    id: 7,
+    league: "Champions League",
+    home: "Real Madrid",
+    away: "Man City",
+    time: "Tomorrow 22:00",
+    tip: "BTTS Yes",
+    confidence: 88,
+    reason: "Both teams scored in last 6 UCL meetings. Haaland vs Mbappe battle.",
+    odds: { betika: "1.62", sportpesa: "1.65", mozzart: "1.64" },
+    isJackpot: true
+  },
+  {
+    id: 8,
+    league: "Champions League",
+    home: "Bayern Munich",
+    away: "PSG",
+    time: "Tomorrow 22:00",
+    tip: "Over 2.5 Goals",
+    confidence: 85,
+    reason: "Bayern home: 12 goals in last 3 UCL games. PSG away weak defensively.",
+    odds: { betika: "1.78", sportpesa: "1.80", mozzart: "1.79" },
+    isJackpot: true
+  },
+  {
+    id: 9,
+    league: "Champions League",
+    home: "Arsenal",
+    away: "Inter Milan",
+    time: "Today 22:00",
+    tip: "Home Win",
+    confidence: 79,
+    reason: "Arsenal unbeaten at Emirates in UCL. Inter missing 2 key defenders.",
+    odds: { betika: "2.10", sportpesa: "2.15", mozzart: "2.12" },
+    isJackpot: false
+  },
+  {
+    id: 10,
+    league: "Champions League",
+    home: "Barcelona",
+    away: "Dortmund",
+    time: "Today 22:00",
+    tip: "Barcelona Win",
+    confidence: 81,
+    reason: "Barca 90% win rate at Camp Nou in UCL group stage.",
+    odds: { betika: "1.55", sportpesa: "1.58", mozzart: "1.56" },
+    isJackpot: false
+  },
