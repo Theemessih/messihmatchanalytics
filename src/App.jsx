@@ -1,4 +1,3 @@
-import { useState } from "react";
 export default function App(){
 const [vip,setVip]=useState(false);
 const [show,setShow]=useState(false);
