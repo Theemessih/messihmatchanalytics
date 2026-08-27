@@ -1,4 +1,3 @@
-export default function App(){
 const [vip,setVip]=useState(false);
 const [show,setShow]=useState(false);
 const [code,setCode]=useState("");
@@ -23,3 +22,4 @@ return(
 <button onClick={()=>{if(code.length>5){setVip(true);setShow(false);alert("VIP Unlocked!")}else{alert("Enter code")}}} style={{width:"100%",background:"#4ade80",color:"black",padding:"10px",fontWeight:"bold"}}>Verify</button>
 <button onClick={()=>setShow(false)} style={{width:"100%",marginTop:"10px",color:"gray"}}>Cancel</button>
 </div></div>}
+  
