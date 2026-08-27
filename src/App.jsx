@@ -15,39 +15,87 @@ const allGames = [
 
 export default function App() {
   const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? allGames : filter === "Jackpot" ? allGames.filter(g => g.isJackpot) : allGames.filter(g => g.league === filter);
+  const [isVip, setIsVip] = useState(false);
+  const [showPay, setShowPay] = useState(false);
+  const [code, setCode] = useState("");
+
+  const filtered = filter === "All"? allGames : filter === "Jackpot"? allGames.filter(g => g.isJackpot) : allGames.filter(g => g.league === filter);
+
+  const handleUnlock = () => {
+    if(code.length > 5) { setIsVip(true); setShowPay(false); alert("Welcome to VIP! Jackpot Unlocked!"); }
+    else { alert("Enter your M-Pesa code e.g. QGH8K..."); }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white p-4">
-      <h1 className="text-3xl font-bold text-center mb-2">MESSIH<span className="text-green-400">MatchAnalytics</span></h1>
-      <p className="text-center text-gray-400 mb-4">Pro Football Predictions - {allGames.length} Games</p>
+      <h1 className="text-3xl font-bold text-center mb-1">MESSIH<span className="text-green-400">MatchAnalytics</span></h1>
+      <p className="text-center text-gray-400 mb-1">Pro Football Predictions - {allGames.length} Games</p>
+      <div className="text-center mb-4">
+        {!isVip? (
+          <button onClick={()=>setShowPay(true)} className="bg-green-500 text-black font-bold px-6 py-2 rounded-full animate-pulse">🔓 Unlock JACKPOT VIP - 50 KSH</button>
+        ) : (
+          <span className="bg-yellow-500 text-black px-4 py-1 rounded-full font-bold">✅ VIP UNLOCKED</span>
+        )}
+      </div>
+
+      {showPay && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-900 border border-green-500 rounded-2xl p-6 max-w-sm w-full">
+            <h2 className="text-xl font-bold text-center mb-4">Lipa na M-Pesa</h2>
+            <div className="bg-white text-black p-4 rounded-xl text-center mb-4">
+              <p className="text-sm">Buy Goods Till Number</p>
+              <p className="text-3xl font-black text-green-600">123456</p>
+              <p className="text-xs mt-1">Name: MESSIH ANALYTICS</p>
+              <p className="text-lg font-bold mt-2">Amount: 350 KSH</p>
+            </div>
+            <p className="text-xs text-gray-400 text-center mb-2">1. Go to M-Pesa -> Lipa na M-Pesa -> Buy Goods</p>
+            <p className="text-xs text-gray-400 text-center mb-4">2. Enter Till 1581046 and 350 KSH. Then enter code below:</p>
+            <input value={code} onChange={e=>setCode(e.target.value)} placeholder="Enter M-Pesa Code e.g. QGH..." className="w-full p-3 rounded-lg bg-black border border-gray-700 text-white mb-3" />
+            <button onClick={handleUnlock} className="w-full bg-green-500 text-black font-bold py-3 rounded-lg">Verify & Unlock</button>
+            <button onClick={()=>setShowPay(false)} className="w-full mt-2 text-gray-400 text-sm">Cancel</button>
+            <p className="text-[10px] text-gray-500 mt-3 text-center">Change Till to your number in App.jsx line 35</p>
+          </div>
+        </div>
+      )}
+
       <div className="flex gap-2 justify-center mb-6 flex-wrap">
         {["All", "Jackpot", "Premier League", "Champions League", "LaLiga", "KPL"].map(f => (
-          <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-full text-sm ${filter === f ? "bg-green-500 text-black" : "bg-gray-800"}`}>{f} {f==="All" ? `(${allGames.length})` : f==="Jackpot" ? `(${allGames.filter(g=>g.isJackpot).length})` : `(${allGames.filter(g=>g.league===f).length})`}</button>
+          <button key={f} onClick={() => setFilter(f)} className={`px-4 py-2 rounded-full text-sm ${filter === f? "bg-green-500 text-black" : "bg-gray-800"}`}>{f}</button>
         ))}
       </div>
       <div className="grid gap-4 max-w-4xl mx-auto">
-        {filtered.map(game => (
-          <div key={game.id} className="bg-gray-900 rounded-xl p-4 border border-gray-800">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-xs bg-gray-800 px-2 py-1 rounded">{game.league}</span>
-              {game.isJackpot && <span className="text-xs bg-yellow-500 text-black px-2 py-1 rounded font-bold">JACKPOT</span>}
-              <span className="text-xs text-gray-400">{game.time}</span>
-            </div>
-            <h3 className="text-lg font-bold">{game.home} vs {game.away}</h3>
-            <div className="mt-3 bg-gray-800 rounded-lg p-3">
-              <div className="flex justify-between items-center">
-                <span className="text-green-400 font-bold">{game.tip}</span>
-                <span className="bg-green-500 text-black px-3 py-1 rounded-full text-sm font-bold">{game.confidence}%</span>
+        {filtered.map(game => {
+          const isLocked = game.isJackpot &&!isVip;
+          return (
+            <div key={game.id} className={`bg-gray-900 rounded-xl p-4 border ${isLocked? "border-yellow-500/30" : "border-gray-800"}`}>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs bg-gray-800 px-2 py-1 rounded">{game.league}</span>
+                {game.isJackpot && <span className={`text-xs px-2 py-1 rounded font-bold ${isVip? "bg-yellow-500 text-black" : "bg-yellow-500/20 text-yellow-500"}`}>🔒 JACKPOT VIP</span>}
+                <span className="text-xs text-gray-400">{game.time}</span>
               </div>
-              <p className="text-xs text-gray-400 mt-2">{game.reason}</p>
-              <div className="flex gap-2 mt-3 text-xs">
-                <span className="bg-black px-2 py-1 rounded">Betika {game.odds.betika}</span>
-                <span className="bg-black px-2 py-1 rounded">SportPesa {game.odds.sportpesa}</span>
-                <span className="bg-black px-2 py-1 rounded">Mozzart {game.odds.mozzart}</span>
-              </div>
+              <h3 className="text-lg font-bold">{game.home} vs {game.away}</h3>
+              {isLocked? (
+                <div className="mt-3 bg-black rounded-lg p-4 text-center border border-dashed border-yellow-500/30">
+                  <p className="text-yellow-500 font-bold blur-sm">Tip: {game.tip} - {game.confidence}%</p>
+                  <button onClick={()=>setShowPay(true)} className="mt-2 bg-yellow-500 text-black px-4 py-1 rounded-full text-sm font-bold">Pay 50 KSH to Unlock</button>
+                </div>
+              ) : (
+                <div className="mt-3 bg-gray-800 rounded-lg p-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-green-400 font-bold">{game.tip}</span>
+                    <span className="bg-green-500 text-black px-3 py-1 rounded-full text-sm font-bold">{game.confidence}%</span>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-2">{game.reason}</p>
+                  <div className="flex gap-2 mt-3 text-xs">
+                    <span className="bg-black px-2 py-1 rounded">Betika {game.odds.betika}</span>
+                    <span className="bg-black px-2 py-1 rounded">SportPesa {game.odds.sportpesa}</span>
+                    <span className="bg-black px-2 py-1 rounded">Mozzart {game.odds.mozzart}</span>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
