@@ -1,25 +1,93 @@
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f172a;color:#fff;font-family:system-ui}
-.container{max-width:1200px;margin:0 auto;padding:20px}
-header{text-align:center;margin-bottom:20px}
-.logo{font-size:2.5rem;font-weight:900}
-.logo span{color:#00e676}
-.live{font-size:0.8rem;color:#00e676;display:inline-block;margin-left:10px;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.search{width:100%;max-width:400px;padding:12px 20px;border-radius:30px;border:none;margin:20px 0;font-size:1rem}
-.tabs{display:flex;justify-content:center;gap:10px;margin-top:10px}
-.tabs button{padding:10px 20px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:#fff;cursor:pointer}
-.tabs button.active{background:#00e676;color:#000;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
-.card{background:#1e293b;border-radius:16px;padding:18px;border:1px solid #334155}
-.card-top{display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:10px;color:#94a3b8}
-.jackpot{background:#facc15;color:#000;padding:2px 8px;border-radius:10px;font-weight:800;font-size:0.7rem}
-.prediction{display:flex;justify-content:space-between;background:#0f172a;padding:10px;border-radius:10px;margin:10px 0}
-.conf{padding:3px 10px;border-radius:20px;font-weight:800;color:#000}
-.analysis{font-size:0.85rem;color:#cbd5e1;margin:10px 0;line-height:1.4}
-.odds{display:flex;gap:8px;margin:12px 0}
-.odds div{flex:1;background:#0f172a;padding:8px;border-radius:8px;text-align:center}
-.odds div.best{background:#00e67622;border:1px solid #00e676}
-.odds span{display:block;font-size:0.7rem;color:#94a3b8}
-.btn{width:100%;padding:12px;background:#00e676;color:#000;border:none;border-radius:10px;font-weight:800;cursor:pointer}
-footer{text-align:center;margin-top:40px;color:#64748b;font-size:0.8rem}
+import { useState } from "react";
+
+const allGames = [
+  { id: 1, league: "Premier League", home: "Arsenal", away: "Man City", time: "Today 19:30", tip: "Over 1.5 Goals", confidence: 77, reason: "Both teams scoring form. Last 5 meetings all over 1.5", odds: { betika: "1.28", sportpesa: "1.30", mozzart: "1.27" }, isJackpot: false },
+  { id: 2, league: "LaLiga", home: "Barcelona", away: "Real Madrid", time: "Today 22:00", tip: "BTTS Yes", confidence: 82, reason: "El Clasico always BTTS. 8 of last 10", odds: { betika: "1.65", sportpesa: "1.70", mozzart: "1.68" }, isJackpot: true },
+  { id: 3, league: "KPL", home: "Gor Mahia", away: "Tusker", time: "Tomorrow 15:00", tip: "Home Win", confidence: 75, reason: "Gor Mahia unbeaten at home 10 games", odds: { betika: "2.10", sportpesa: "2.15", mozzart: "2.08" }, isJackpot: false },
+  { id: 4, league: "Premier League", home: "Man Utd", away: "Liverpool", time: "Today 17:30", tip: "Over 2.5", confidence: 88, reason: "High scoring rivalry", odds: { betika: "1.75", sportpesa: "1.80", mozzart: "1.78" }, isJackpot: true },
+  { id: 7, league: "Champions League", home: "Real Madrid", away: "Man City", time: "Tomorrow 22:00", tip: "BTTS Yes", confidence: 88, reason: "Both scored in last 6 UCL meetings", odds: { betika: "1.62", sportpesa: "1.65", mozzart: "1.64" }, isJackpot: true },
+  { id: 8, league: "Champions League", home: "Bayern Munich", away: "PSG", time: "Tomorrow 22:00", tip: "Over 2.5 Goals", confidence: 85, reason: "Bayern 12 goals last 3 UCL home games", odds: { betika: "1.78", sportpesa: "1.80", mozzart: "1.79" }, isJackpot: true },
+];
+
+export default function App() {
+  const [filter, setFilter] = useState("All");
+  const [isVip, setIsVip] = useState(false);
+  const [showPay, setShowPay] = useState(false);
+  const [code, setCode] = useState("");
+  
+  const filtered = filter === "All" ? allGames : filter === "Jackpot" ? allGames.filter(function(g){return g.isJackpot;}) : allGames.filter(function(g){return g.league === filter;});
+  
+  function handleUnlock() {
+    if(code.length > 5) { setIsVip(true); setShowPay(false); alert("Welcome to VIP! Jackpot Unlocked!"); }
+    else { alert("Enter your M-Pesa code e.g. QGH8K..."); }
+  }
+
+  return (
+    <div className="min-h-screen bg-black text-white p-4">
+      <h1 className="text-3xl font-bold text-center mb-1">MESSIH<span className="text-green-400">MatchAnalytics</span></h1>
+      <p className="text-center text-gray-400 mb-1">Pro Predictions - {allGames.length} Games</p>
+      <div className="text-center mb-4">
+        {!isVip ? (
+          <button onClick={function(){setShowPay(true);}} className="bg-green-500 text-black font-bold px-6 py-2 rounded-full">Unlock JACKPOT VIP - 350 KSH</button>
+        ) : (
+          <span className="bg-yellow-500 text-black px-4 py-1 rounded-full font-bold">VIP UNLOCKED</span>
+        )}
+      </div>
+
+      {showPay && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-900 border border-green-500 rounded-2xl p-6 max-w-sm w-full">
+            <h2 className="text-xl font-bold text-center mb-4">Lipa na M-Pesa</h2>
+            <div className="bg-white text-black p-4 rounded-xl text-center mb-4">
+              <p className="text-sm">Buy Goods Till Number</p>
+              <p className="text-3xl font-black text-green-600">1581046</p>
+              <p className="text-xs mt-1">MESSIH ANALYTICS</p>
+              <p className="text-lg font-bold mt-2">Amount: 350 KSH</p>
+            </div>
+            <p className="text-xs text-gray-400 text-center mb-2">1. M-Pesa - Lipa na M-Pesa - Buy Goods</p>
+            <p className="text-xs text-gray-400 text-center mb-4">2. Enter Till 1581046 and 350 KSH</p>
+            <input value={code} onChange={function(e){setCode(e.target.value);}} placeholder="M-Pesa Code" className="w-full p-3 rounded-lg bg-black border border-gray-700 text-white mb-3" />
+            <button onClick={handleUnlock} className="w-full bg-green-500 text-black font-bold py-3 rounded-lg">Verify and Unlock</button>
+            <button onClick={function(){setShowPay(false);}} className="w-full mt-2 text-gray-400 text-sm">Cancel</button>
+          </div>
+        </div>
+      )}
+
+      <div className="flex gap-2 justify-center mb-6 flex-wrap">
+        {["All", "Jackpot", "Premier League", "Champions League", "LaLiga", "KPL"].map(function(f){
+          return <button key={f} onClick={function(){setFilter(f);}} className={"px-4 py-2 rounded-full text-sm " + (filter === f ? "bg-green-500 text-black" : "bg-gray-800")}>{f}</button>
+        })}
+      </div>
+
+      <div className="grid gap-4 max-w-4xl mx-auto">
+        {filtered.map(function(game){
+          var isLocked = game.isJackpot && !isVip;
+          return (
+            <div key={game.id} className={"bg-gray-900 rounded-xl p-4 border " + (isLocked ? "border-yellow-500/30" : "border-gray-800")}>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs bg-gray-800 px-2 py-1 rounded">{game.league}</span>
+                {game.isJackpot && <span className={"text-xs px-2 py-1 rounded font-bold " + (isVip ? "bg-yellow-500 text-black" : "bg-yellow-500/20 text-yellow-500")}>JACKPOT VIP</span>}
+                <span className="text-xs text-gray-400">{game.time}</span>
+              </div>
+              <h3 className="text-lg font-bold">{game.home} vs {game.away}</h3>
+              {isLocked ? (
+                <div className="mt-3 bg-black rounded-lg p-4 text-center border border-dashed border-yellow-500/30">
+                  <p className="text-yellow-500 font-bold">Tip Locked - Pay to Unlock</p>
+                  <button onClick={function(){setShowPay(true);}} className="mt-2 bg-yellow-500 text-black px-4 py-1 rounded-full text-sm font-bold">Pay 350 KSH</button>
+                </div>
+              ) : (
+                <div className="mt-3 bg-gray-800 rounded-lg p-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-green-400 font-bold">{game.tip}</span>
+                    <span className="bg-green-500 text-black px-3 py-1 rounded-full text-sm font-bold">{game.confidence}%</span>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-2">{game.reason}</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
