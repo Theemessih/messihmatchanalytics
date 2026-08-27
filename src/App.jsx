@@ -1,5 +1,5 @@
-import { useState } from "react";
-export default function App(){
+imporimport { useState } from "react";
+exporexport default function App(){
 const [vip,setVip]=useState(false);
 const [show,setShow]=useState(false);
 const [code,setCode]=useState("");
