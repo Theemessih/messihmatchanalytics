@@ -23,13 +23,3 @@ return(
 <button onClick={()=>{if(code.length>5){setVip(true);setShow(false);alert("VIP Unlocked!")}else{alert("Enter code")}}} style={{width:"100%",background:"#4ade80",color:"black",padding:"10px",fontWeight:"bold"}}>Verify</button>
 <button onClick={()=>setShow(false)} style={{width:"100%",marginTop:"10px",color:"gray"}}>Cancel</button>
 </div></div>}
-{games.map(g=>{
-const locked=g.isJack&&!vip;
-return<div key={g.id} style={{background:"#111",padding:"15px",margin:"10px auto",maxWidth:"500px",borderRadius:"10px"}}>
-<p style={{fontSize:"12px",color:"gray"}}>{g.league}</p>
-<h3>{g.home} vs {g.away}</h3>
-{locked?<div style={{background:"black",padding:"10px",textAlign:"center",marginTop:"10px"}}><p style={{color:"gold"}}>Locked - Pay 350 KSH</p><button onClick={()=>setShow(true)} style={{background:"gold",color:"black",padding:"5px 10px",borderRadius:"15px",marginTop:"5px"}}>Unlock</button></div>:<div style={{background:"#222",padding:"10px",marginTop:"10px"}}><span style={{color:"#4ade80",fontWeight:"bold"}}>{g.tip}</span> - {g.conf}%</div>}
-</div>
-})}
-</div>
-)}
