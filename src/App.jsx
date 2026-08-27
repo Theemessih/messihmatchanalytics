@@ -1,5 +1,4 @@
-const [vip,setVip]=useState(false);
-const [show,setShow]=useState(false);
+show,setShow]=useState(false);
 const [code,setCode]=useState("");
 const games=[
 {id:1,league:"Premier League",home:"Arsenal",away:"Man City",tip:"Over 1.5 Goals",conf:77,isJack:true},
