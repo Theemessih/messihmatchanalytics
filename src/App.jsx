@@ -4,33 +4,88 @@ const [vip,setVip]=useState(false);
 const [show,setShow]=useState(false);
 const [code,setCode]=useState("");
 const games=[
-{id:1,league:"Premier League",home:"Arsenal",away:"Man City",tip:"Over 1.5 Goals",conf:77,isJack:true},
-{id:2,league:"Champions League",home:"Real Madrid",away:"Man City",tip:"BTTS Yes",conf:88,isJack:true},
-{id:3,league:"KPL",home:"Gor Mahia",away:"Tusker",tip:"Home Win",conf:75,isJack:false},
+{id:1,league:"KPL",home:"Gor Mahia",away:"Tusker",tip:"Home Win",odd:"2.10",time:"15:00"},
+{id:2,league:"KPL",home:"AFC Leopards",away:"Ulinzi Stars",tip:"Over 1.5",odd:"1.65",time:"15:00"},
+{id:3,league:"KPL",home:"Bandari",away:"KCB",tip:"Under 2.5",odd:"1.70",time:"15:30"},
+{id:4,league:"KPL",home:"Kenya Police",away:"Kakamega Homeboyz",tip:"Home Win",odd:"1.85",time:"16:00"},
+{id:5,league:"KPL",home:"Sofapaka",away:"Posta Rangers",tip:"BTTS Yes",odd:"1.90",time:"13:00"},
+{id:6,league:"EPL",home:"Arsenal",away:"Man City",tip:"Over 2.5",odd:"1.85",time:"16:00"},
+{id:7,league:"EPL",home:"Liverpool",away:"Chelsea",tip:"Over 2.5",odd:"1.80",time:"17:30"},
+{id:8,league:"EPL",home:"Man Utd",away:"Tottenham",tip:"BTTS Yes",odd:"1.70",time:"16:00"},
+{id:9,league:"EPL",home:"Newcastle",away:"Brighton",tip:"Over 1.5",odd:"1.40",time:"16:00"},
+{id:10,league:"EPL",home:"Aston Villa",away:"West Ham",tip:"Home Win",odd:"1.95",time:"16:00"},
+{id:11,league:"EPL",home:"Crystal Palace",away:"Everton",tip:"Under 2.5",odd:"1.65",time:"16:00"},
+{id:12,league:"EPL",home:"Fulham",away:"Wolves",tip:"BTTS Yes",odd:"1.75",time:"16:00"},
+{id:13,league:"La Liga",home:"Real Madrid",away:"Barcelona",tip:"BTTS Yes",odd:"1.75",time:"21:00"},
+{id:14,league:"La Liga",home:"Atletico Madrid",away:"Sevilla",tip:"Under 3.5",odd:"1.40",time:"18:30"},
+{id:15,league:"La Liga",home:"Villarreal",away:"Betis",tip:"Over 2.5",odd:"1.85",time:"19:00"},
+{id:16,league:"La Liga",home:"Athletic Bilbao",away:"Real Sociedad",tip:"Under 2.5",odd:"1.60",time:"20:00"},
+{id:17,league:"Bundesliga",home:"Bayern Munich",away:"Dortmund",tip:"Home Win",odd:"1.90",time:"19:30"},
+{id:18,league:"Bundesliga",home:"Leverkusen",away:"RB Leipzig",tip:"Over 2.5",odd:"1.65",time:"19:30"},
+{id:19,league:"Bundesliga",home:"Stuttgart",away:"Frankfurt",tip:"BTTS Yes",odd:"1.68",time:"16:30"},
+{id:20,league:"Serie A",home:"Inter",away:"AC Milan",tip:"Over 1.5",odd:"1.35",time:"20:45"},
+{id:21,league:"Serie A",home:"Napoli",away:"Roma",tip:"Over 2.5",odd:"1.85",time:"20:45"},
+{id:22,league:"Serie A",home:"Juventus",away:"Lazio",tip:"Under 2.5",odd:"1.60",time:"18:00"},
+{id:23,league:"Ligue 1",home:"PSG",away:"Marseille",tip:"Home Win",odd:"1.60",time:"21:00"},
+{id:24,league:"Ligue 1",home:"Lyon",away:"Monaco",tip:"Over 2.5",odd:"1.78",time:"19:00"},
+{id:25,league:"Africa",home:"Simba SC",away:"Yanga",tip:"Home Win",odd:"2.05",time:"18:00"},
+{id:26,league:"Africa",home:"Al Ahly",away:"Pyramids",tip:"Home Win",odd:"1.70",time:"19:00"},
+{id:27,league:"Africa",home:"Mamelodi Sundowns",away:"Orlando Pirates",tip:"Under 2.5",odd:"1.60",time:"17:00"},
+{id:28,league:"Africa",home:"TP Mazembe",away:"Vita Club",tip:"Home Win",odd:"1.90",time:"16:00"},
+{id:29,league:"Africa",home:"Raja Casablanca",away:"Wydad",tip:"Under 2.5",odd:"1.55",time:"21:00"},
+{id:30,league:"UCL",home:"Man City",away:"PSG",tip:"Over 2.5",odd:"1.70",time:"21:00"},
+{id:31,league:"UCL",home:"Bayern",away:"Real Madrid",tip:"BTTS Yes",odd:"1.65",time:"21:00"},
+{id:32,league:"UCL",home:"Arsenal",away:"Inter",tip:"Over 1.5",odd:"1.35",time:"21:00"},
+{id:33,league:"Europa",home:"Man Utd",away:"Roma",tip:"Over 2.5",odd:"1.80",time:"21:00"},
+{id:34,league:"Europa",home:"Tottenham",away:"Ajax",tip:"BTTS Yes",odd:"1.72",time:"21:00"},
+{id:35,league:"Other",home:"Galatasaray",away:"Fenerbahce",tip:"Over 2.5",odd:"1.75",time:"19:00"},
+{id:36,league:"Jackpot",home:"Liverpool",away:"Chelsea",tip:"Home Win & Over 1.5",odd:"2.40",time:"17:30"},
+{id:37,league:"Jackpot",home:"Atletico",away:"Sevilla",tip:"Home Win",odd:"1.85",time:"18:30"},
+{id:38,league:"Jackpot",home:"Bayern",away:"Dortmund",tip:"Over 2.5",odd:"1.70",time:"19:30"},
+{id:39,league:"Jackpot",home:"PSG",away:"Lyon",tip:"Home Win",odd:"1.55",time:"21:00"},
+{id:40,league:"Jackpot",home:"Inter",away:"Juventus",tip:"BTTS Yes",odd:"1.80",time:"20:45"},
+{id:41,league:"Jackpot",home:"Arsenal",away:"Tottenham",tip:"Over 2.5",odd:"1.82",time:"16:00"},
+{id:42,league:"Jackpot",home:"Real Madrid",away:"Villarreal",tip:"Home Win",odd:"1.60",time:"21:00"},
+{id:43,league:"Jackpot",home:"Man City",away:"Newcastle",tip:"Over 1.5",odd:"1.30",time:"16:00"},
+{id:44,league:"Jackpot",home:"Napoli",away:"AC Milan",tip:"BTTS Yes",odd:"1.75",time:"20:45"},
+{id:45,league:"Jackpot",home:"Bayer Leverkusen",away:"Stuttgart",tip:"Home Win",odd:"1.70",time:"19:30"},
+{id:46,league:"Jackpot",home:"AFC Leopards",away:"Gor Mahia",tip:"Under 2.5",odd:"1.60",time:"15:00"},
+{id:47,league:"Jackpot",home:"Simba",away:"Azam FC",tip:"Home Win",odd:"1.65",time:"18:00"},
+{id:48,league:"Jackpot",home:"Al Ahly",away:"Zamalek",tip:"Home Win",odd:"1.80",time:"20:00"},
+{id:49,league:"Jackpot",home:"Sundowns",away:"Kaizer Chiefs",tip:"Home Win",odd:"1.55",time:"17:00"},
+{id:50,league:"Jackpot",home:"Raja",away:"Berkane",tip:"Under 2.5",odd:"1.50",time:"21:00"},
+{id:51,league:"Jackpot",home:"Orlando Pirates",away:"Stellenbosch",tip:"Home Win",odd:"1.75",time:"16:00"},
+{id:52,league:"Jackpot",home:"Yang SC",away:"Al Hilal",tip:"Over 1.5",odd:"1.45",time:"18:00"},
+{id:53,league:"Jackpot",home:"Man Utd",away:"Brighton",tip:"Over 2.5",odd:"1.85",time:"16:00"},
+{id:54,league:"Jackpot",home:"Chelsea",away:"West Ham",tip:"Home Win",odd:"1.70",time:"17:30"},
+{id:55,league:"Jackpot",home:"Dortmund",away:"Frankfurt",tip:"Over 2.5",odd:"1.68",time:"16:30"},
 ];
+const checkCode=()=>{if(code==="MESSIH2025"||code==="MESSIH"||code==="VIP55"){setVip(true);setShow(false);alert("VIP 55 GAMES UNLOCKED!");}else{alert("Wrong Code! Lipa Till 1581046");}};
 return(
-<div style={{background:"black",color:"white",padding:"20px",minHeight:"100vh"}}>
-<h1 style={{textAlign:"center"}}>MESSIH <span style={{color:"#4ade80"}}>MatchAnalytics</span></h1>
+<div style={{background:"black",color:"white",padding:"20px",minHeight:"100vh",fontFamily:"Arial"}}>
+<h1 style={{textAlign:"center"}}>MESSIH <span style={{color:"#4ade80"}}>MATCH ANALYTICS</span></h1>
+<p style={{textAlign:"center",color:"#aaa"}}>55 Games Daily - Analysis Across All Sites</p>
 <div style={{textAlign:"center",margin:"20px"}}>
-{!vip?<button onClick={()=>setShow(true)} style={{background:"#4ade80",color:"black",padding:"10px 20px",borderRadius:"20px",fontWeight:"bold"}}>Unlock JACKPOT VIP - 350 KSH</button>:<span style={{background:"gold",color:"black",padding:"5px 10px",borderRadius:"10px"}}>VIP UNLOCKED</span>}
+{!vip?<button onClick={()=>setShow(true)} style={{background:"#4ade80",color:"black",padding:"15px 30px",fontWeight:"bold",border:"none",borderRadius:"8px",fontSize:"18px"}}>🔓 Unlock VIP - 55 Games (Till 1581046)</button>:<div style={{background:"#4ade80",color:"black",padding:"10px",borderRadius:"8px",fontWeight:"bold"}}>VIP 55 ACTIVE ✅</div>}
 </div>
-{show&&<div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.9)",display:"flex",justifyContent:"center",alignItems:"center",padding:"20px"}}>
-<div style={{background:"#111",border:"1px solid #4ade80",padding:"20px",borderRadius:"15px",maxWidth:"300px",width:"100%"}}>
-<h2 style={{textAlign:"center"}}>Lipa na M-Pesa</h2>
-<div style={{background:"white",color:"black",padding:"15px",textAlign:"center",borderRadius:"10px",margin:"15px 0"}}>
-<p>Buy Goods Till</p><p style={{fontSize:"30px",fontWeight:"900",color:"green"}}>1581046</p><p>Amount: 350 KSH</p>
+<div style={{display:"grid",gap:"10px"}}>{games.map(g=>(
+<div key={g.id} style={{background:"#111",border:"1px solid #4ade80",padding:"12px",borderRadius:"8px",opacity:(g.league==="Jackpot"&&!vip)?0.5:1}}>
+<div style={{display:"flex",justifyContent:"space-between",fontSize:"12px"}}><span style={{color:"#4ade80",fontWeight:"bold"}}>{g.league}</span><span>{g.time}</span><span style={{background:"#4ade80",color:"black",padding:"2px 8px",borderRadius:"4px"}}>{g.odd}</span></div>
+<div style={{margin:"8px 0",fontWeight:"bold"}}>{g.home} vs {g.away}</div>
+<div>Tip: <b style={{color:"#4ade80"}}>{(g.league==="Jackpot"&&!vip)?"🔒 VIP ONLY":g.tip}</b></div>
+</div>))}</div>
+<div style={{background:"#111",border:"1px solid #333",padding:"20px",marginTop:"30px",borderRadius:"8px",textAlign:"center"}}>
+<p>WhatsApp: 0793921100</p>
+<a href="https://wa.me/254793921100" target="_blank" style={{background:"#25D366",color:"white",padding:"12px 25px",borderRadius:"8px",textDecoration:"none",fontWeight:"bold",display:"inline-block",marginTop:"10px"}}>WhatsApp Us</a>
+<p style={{marginTop:"10px",fontSize:"12px"}}>Till: 1581046</p>
 </div>
-<input value={code} onChange={e=>setCode(e.target.value)} placeholder="M-Pesa Code" style={{width:"100%",padding:"10px",marginBottom:"10px",background:"black",color:"white",border:"1px solid gray"}}/>
-<button onClick={()=>{if(code.length>5){setVip(true);setShow(false);alert("VIP Unlocked!")}else{alert("Enter code")}}} style={{width:"100%",background:"#4ade80",color:"black",padding:"10px",fontWeight:"bold"}}>Verify</button>
-<button onClick={()=>setShow(false)} style={{width:"100%",marginTop:"10px",color:"gray"}}>Cancel</button>
+{show&&<div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.95)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px",zIndex:1000}}>
+<div style={{background:"#111",border:"1px solid #4ade80",padding:"25px",borderRadius:"12px",maxWidth:"400px",width:"100%",textAlign:"center"}}>
+<h2>Lipa na M-Pesa</h2>
+<div style={{background:"white",color:"black",padding:"15px",borderRadius:"8px",margin:"15px 0"}}><p>Buy Goods Till</p><p style={{fontSize:"32px",fontWeight:"900",color:"#4ade80"}}>1581046</p></div>
+<input value={code} onChange={e=>setCode(e.target.value)} placeholder="VIP Code" style={{width:"100%",padding:"12px",borderRadius:"8px",border:"1px solid #4ade80",background:"black",color:"white"}}/>
+<button onClick={checkCode} style={{width:"100%",background:"#4ade80",color:"black",padding:"12px",fontWeight:"bold",border:"none",borderRadius:"8px",marginTop:"15px"}}>Activate 55 Games</button>
+<button onClick={()=>setShow(false)} style={{width:"100%",background:"transparent",color:"white",padding:"10px",marginTop:"10px",border:"1px solid #333",borderRadius:"8px"}}>Cancel</button>
 </div></div>}
-{games.map(g=>{
-const locked=g.isJack&&!vip;
-return<div key={g.id} style={{background:"#111",padding:"15px",margin:"10px auto",maxWidth:"500px",borderRadius:"10px"}}>
-<p style={{fontSize:"12px",color:"gray"}}>{g.league}</p>
-<h3>{g.home} vs {g.away}</h3>
-{locked?<div style={{background:"black",padding:"10px",textAlign:"center",marginTop:"10px"}}><p style={{color:"gold"}}>Locked - Pay 350 KSH</p><button onClick={()=>setShow(true)} style={{background:"gold",color:"black",padding:"5px 10px",borderRadius:"15px",marginTop:"5px"}}>Unlock</button></div>:<div style={{background:"#222",padding:"10px",marginTop:"10px"}}><span style={{color:"#4ade80",fontWeight:"bold"}}>{g.tip}</span> - {g.conf}%</div>}
-</div>
-})}
-</div>
-)}
+</div>);
+}
