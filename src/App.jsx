@@ -128,4 +128,54 @@ export default function App(){
   return (
     <div className="min-h-screen bg-white text-black max-w-3xl mx-auto p-4 font-sans">
       <header className="flex justify-between items-center border-b pb-3 mb-4">
-        <h1 className="font-extrabold text-xl text-green-700">MESSIH MATCH
+        <h1 className="font-extrabold text-xl text-green-700">MESSIH MATCH ANALYTICS</h1>
+        <button onClick={()=>setView("admin")} className="text-xs border px-3 py-1 rounded-full bg-gray-50">Admin</button>
+      </header>
+
+      <p className="text-[15px] leading-6 mb-4">You can find sure and accurate predictions for today, tomorrow, and the weekend, including this week's 17 SportPesa Mega Jackpot games.</p>
+      <h2 className="font-bold underline mb-3">This week Mega Jackpot Pro Prizes:</h2>
+      <ul className="list-disc pl-6 mb-6 space-y-2 text-[15px]">
+        <li><b>MEGA Jackpot Pro 17</b> — KSH 132,184,625</li>
+        <li><b>MEGA Jackpot Pro 16</b> — KSH 132,619,806</li>
+        <li><b>MEGA Jackpot Pro 15</b> — KSH 100,578,428</li>
+        <li><b>MEGA Jackpot Pro 14</b> — KSH 33,591,398</li>
+        <li><b>MEGA Jackpot Pro 13</b> — KSH 15,617,580</li>
+      </ul>
+
+      <h3 className="font-bold text-center mb-3">Free SportPesa Mega Jackpot Predictions</h3>
+      <div className="border-2 border-gray-800 mb-6 overflow-hidden">
+        <div className="grid grid-cols-[40px_1fr_90px] bg-[#2c3e50] text-white font-bold text-sm">
+          <div className="p-2"></div><div className="p-2 border-l border-white/20">Match</div><div className="p-2 border-l border-white/20">Tip</div>
+        </div>
+        {JACKPOT_GAMES.map(g=>(
+          <div key={g.id} className="grid grid-cols-[40px_1fr_90px] border-t text-[13px]">
+            <div className="p-2 text-center border-r">{g.id}</div>
+            <div className="p-2 border-r">{g.match}</div>
+            <div className="p-2 font-bold text-blue-600">{g.tip}</div>
+          </div>
+        ))}
+      </div>
+
+      <ul className="list-disc pl-6 space-y-2 text-[15px] mb-8">
+        <li className="font-bold underline text-red-600">PREMIUM SUBSCRIPTION PLANS FOR JACKPOTS</li>
+        <li>Pay <span className="font-bold text-blue-600">100/-</span>-<span className="text-blue-600"> 100% sure multibet (12.00 odds)</span></li>
+        <li>Pay <span className="font-bold text-red-600">350/-</span>-<span className="text-blue-600"> 6 versions of Sportpesa</span></li>
+        <li>Pay <span className="font-bold text-red-600">250/-</span>-<span className="text-blue-600"> sportpesa pro (100% Bonus)</span></li>
+        <li>Pay <span className="font-bold text-red-600">140/-</span>-<span className="text-blue-600"> Sportpesa mega (3 version)</span></li>
+        <li>Pay <span className="font-bold text-red-600">130/-</span>-<span className="text-blue-600"> 13/13 pro (100% sure Bonus)</span></li>
+        <li>Pay <span className="font-bold text-blue-600">95/-</span>-<span className="text-blue-600"> Betika midweek (6 version)</span></li>
+        <li>Pay <span className="font-bold text-blue-600">700/-</span>-<span className="text-blue-600"> 1 months subscriptions.</span></li>
+        <li className="font-bold"><span className="text-green-700 underline">MPESA TILL:</span><span className="text-green-700"> 1581046</span><span className="text-red-600">(Buy goods)</span></li>
+        <li className="font-bold"><span className="text-green-700 underline">HELPLINE:</span><span className="text-red-600"> 0793921100</span><span className="text-red-600"> [for clarifications]</span></li>
+      </ul>
+
+      <div className="bg-yellow-50 border-2 border-yellow-500 p-4 rounded-xl text-center">
+        <h3 className="font-bold text-lg mb-2">🔓 Unlock 6 Versions - KES 350 Only</h3>
+        <p className="text-sm mb-3">Lipa Na M-Pesa Till 1581046 then get VIP code</p>
+        <a href="https://wa.me/254793921100?text=Hi%20Messih%20I%20paid%20to%20Till%201581046%20for%20Jackpot%20KES%20350" className="inline-block bg-green-600 text-white px-8 py-3 rounded-full font-bold">Pay via WhatsApp</a>
+      </div>
+
+      <footer className="mt-10 text-center text-xs text-gray-500 border-t pt-4">Messih Match Analytics - Till 1581046</footer>
+    </div>
+  )
+}
